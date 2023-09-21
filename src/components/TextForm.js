@@ -52,16 +52,19 @@ export default function TextForm(props) {
             }}
           ></textarea>
         </div>
-        <button className="btn btn-primary mx-1" onClick={handleUpClick}>
+        <button className="btn btn-primary mx-1 my-1" onClick={handleUpClick}>
           Convert to Uppercase
         </button>
-        <button className="btn btn-primary mx-1" onClick={handleLowClick}>
+        <button className="btn btn-primary mx-1 my-1" onClick={handleLowClick}>
           Convert to Lowercase
         </button>
-        <button className="btn btn-primary mx-1" onClick={handleTrimClick}>
+        <button className="btn btn-primary mx-1 my-1" onClick={handleTrimClick}>
           Remove Extra Space
         </button>
-        <button className="btn btn-primary mx-1" onClick={handleClearClick}>
+        <button
+          className="btn btn-primary mx-1 my-1"
+          onClick={handleClearClick}
+        >
           Clear the Text
         </button>
       </div>
@@ -72,13 +75,18 @@ export default function TextForm(props) {
         }}
       >
         <h2>Your text summary</h2>
-        {/* <p>
-          {text.split(" ").length} words and {text.length} characters
-        </p> */}
         <p>
+          {
+            text.split(" ").filter((element) => {
+              return element.length !== 0;
+            }).length
+          }{" "}
+          words and {text.length} characters
+        </p>
+        {/* <p>
           {text.trim() === "" ? 0 : text.match(/\S+/g).length} words and{" "}
           {text.replace(/\s+/g, "").length} characters
-        </p>
+        </p> */}
         <p>{0.008 * text.split(" ").length} Minutes to read</p>
         <h2>Preview</h2>
         <p>
