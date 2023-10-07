@@ -2,32 +2,38 @@ import React, { useState } from "react";
 
 export default function TextForm(props) {
   const handleUpClick = () => {
-    // console.log("Uppercase was clicked" + text);
     let newText = text.toUpperCase();
     setText(newText);
     props.showAlert("Converted to Uppercase!", "success");
   };
   const handleLowClick = () => {
-    // console.log("Lowercase was clicked" + text);
     let newText = text.toLowerCase();
     setText(newText);
     props.showAlert("Converted to Lowercase!", "success");
   };
   const handleTrimClick = () => {
-    // console.log("Lowercase was clicked" + text);
     let newText = text.replace(/\s+/g, " ").trim();
     setText(newText);
     props.showAlert("Extra space has been removed!", "success");
   };
   const handleClearClick = () => {
-    // console.log("Lowercase was clicked" + text);
     let newText = "";
     setText(newText);
     props.showAlert("Text is cleared!", "success");
   };
   const handleOnChange = (event) => {
-    // console.log("On Change");
     setText(event.target.value);
+  };
+  const handleCopyClick = () => {
+    navigator.clipboard.writeText(text);
+    props.showAlert("Text copied to clipboard!", "success");
+  };
+  const handleGenerateTextClick = () => {
+    let dummyText = "";
+    dummyText +=
+      "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.";
+    setText(dummyText);
+    props.showAlert("Sample text generated!", "success");
   };
   const [text, setText] = useState("");
   return (
@@ -38,7 +44,7 @@ export default function TextForm(props) {
           color: props.mode === "dark" ? "white" : "#042743",
         }}
       >
-        <h1>{props.heading}</h1>
+        <h1 className="mb-4">{props.heading}</h1>
         <div className="mb-3">
           <textarea
             className="form-control"
@@ -46,26 +52,54 @@ export default function TextForm(props) {
             onChange={handleOnChange}
             id="myBox"
             rows="8"
+            placeholder="Enter text here"
             style={{
-              backgroundColor: props.mode === "dark" ? "gray" : "white",
+              backgroundColor: props.mode === "dark" ? "#13466e" : "white",
               color: props.mode === "dark" ? "white" : "#042743",
             }}
           ></textarea>
         </div>
-        <button className="btn btn-primary mx-1 my-1" onClick={handleUpClick}>
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1"
+          onClick={handleUpClick}
+        >
           Convert to Uppercase
         </button>
-        <button className="btn btn-primary mx-1 my-1" onClick={handleLowClick}>
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1"
+          onClick={handleLowClick}
+        >
           Convert to Lowercase
         </button>
-        <button className="btn btn-primary mx-1 my-1" onClick={handleTrimClick}>
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1"
+          onClick={handleTrimClick}
+        >
           Remove Extra Space
         </button>
         <button
-          className="btn btn-primary mx-1 my-1"
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1"
           onClick={handleClearClick}
         >
           Clear the Text
+        </button>
+        <button
+          disabled={text.length === 0}
+          className="btn btn-primary mx-1"
+          onClick={handleCopyClick}
+        >
+          Copy the Text
+        </button>
+        <button
+          disabled={text.length !== 0}
+          className="btn btn-primary mx-1"
+          onClick={handleGenerateTextClick}
+        >
+          Generate Dummy Text
         </button>
       </div>
       <div
@@ -87,13 +121,15 @@ export default function TextForm(props) {
           {text.trim() === "" ? 0 : text.match(/\S+/g).length} words and{" "}
           {text.replace(/\s+/g, "").length} characters
         </p> */}
-        <p>{0.008 * text.split(" ").length} Minutes to read</p>
-        <h2>Preview</h2>
         <p>
-          {text.length > 0
-            ? text
-            : "Enter Something in the textbox above to preview it here"}
+          {0.008 *
+            text.split(" ").filter((element) => {
+              return element.length !== 0;
+            }).length}{" "}
+          Minutes to read
         </p>
+        <h2>Preview</h2>
+        <p>{text.length > 0 ? text : "Nothing to preview!"}</p>
       </div>
     </>
   );
