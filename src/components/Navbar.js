@@ -8,7 +8,7 @@ export default function Navbar(props) {
       <nav
         className={`navbar navbar-expand-lg navbar-${props.mode} bg-${props.mode}`}
       >
-        <Link className="navbar-brand" to="/">
+        <Link className="navbar-brand" to="/TextUtils-React">
           {props.title}
         </Link>
         <button
@@ -26,7 +26,7 @@ export default function Navbar(props) {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav mr-auto">
             <li className="nav-item active">
-              <Link className="nav-link" to="/">
+              <Link className="nav-link" to="/TextUtils-React">
                 Home <span className="sr-only">(current)</span>
               </Link>
             </li>

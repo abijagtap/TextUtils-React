@@ -79,7 +79,7 @@ function App() {
           <Routes>
             <Route
               exact
-              path="/"
+              path="/TextUtils-React"
               element={
                 <TextForm
                   showAlert={showAlert}
